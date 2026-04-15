@@ -66,27 +66,26 @@ app.listen(port, () => {
 });
 
 const addUser = (user) => {
+  user.id = Math.random().toString(36).slice(2, 8);
   users["users_list"].push(user);
   return user;
 };
 
 app.post("/users", (req, res) => {
   const userToAdd = req.body;
-  console.log(userToAdd);
-  addUser(userToAdd);
-  res.send();
+  const addedUser = addUser(userToAdd);
+  res.status(201).send(addedUser);
 });
 
 app.delete("/users/:id", (req, res) => {
   const id = req.params.id;
-  const index = users.users_list.findIndex(
-    (user) => user && user.id === id
-  );
+  const index = users["users_list"].findIndex((user) => user["id"] === id);
+
   if (index === -1) {
     res.status(404).send("Resource not found.");
   } else {
-    users.users_list.splice(index, 1);
-    res.send("deleted");
+    users["users_list"].splice(index, 1);
+    res.status(204).send();
   }
 });
 
