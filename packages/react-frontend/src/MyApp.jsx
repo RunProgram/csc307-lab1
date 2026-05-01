@@ -14,7 +14,7 @@ function MyApp() {
                 if (res.status !== 204) {
                     throw new Error();
                 }
-                setCharacters(characters.filter((character) => character.id !== id));
+                setCharacters(characters.filter((character) => character._id !== id));
             })
             .catch((error) => console.log(error));
     }
